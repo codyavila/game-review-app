@@ -3,7 +3,6 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
 
-
 import useStyles from './styles'
 import { createPost, updatePost } from '../../actions/posts'
 
@@ -15,12 +14,14 @@ const Form = ({ currentId, setCurrentId }) => {
     tags: '',
     selectedFile: ''
   })
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  )
   const dispatch = useDispatch()
   const classes = useStyles()
 
   useEffect(() => {
-    if(post) setPostData(post)
+    if (post) setPostData(post)
   }, [post])
 
   const handleSubmit = async (e) => {
@@ -31,9 +32,19 @@ const Form = ({ currentId, setCurrentId }) => {
     } else {
       dispatch(createPost(postData))
     }
+    clear()
   }
 
-  const clear = () => {}
+  const clear = () => {
+    setCurrentId(null)
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: ''
+    })
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -42,6 +53,9 @@ const Form = ({ currentId, setCurrentId }) => {
         noValidate
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}>
+        <Typography variant='h6'>
+          {currentId ? 'Editing' : 'Creating'} a Game Review
+        </Typography>
         <TextField
           name='creator'
           variant='outlined'
