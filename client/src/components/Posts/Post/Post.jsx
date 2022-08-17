@@ -17,10 +17,13 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
 
+import { deletePost } from '../../../actions/posts'
+
 import useStyles from './styles'
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   return (
     <Card className={classes.card}>
@@ -38,7 +41,10 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size='small' onClick={() => setCurrentId(post._id)}>
+        <Button
+          style={{ color: 'white' }}
+          size='small'
+          onClick={() => setCurrentId(post._id)}>
           <MoreHorizIcon fontSize='medium' />
         </Button>
       </div>
@@ -47,7 +53,9 @@ const Post = ({ post, setCurrentId }) => {
           {post.tags.map((tag) => `#${tag} `)}
         </Typography>
       </div>
-        <Typography className={classes.title} variant='h5' gutterBottom>{post.title}</Typography>
+      <Typography className={classes.title} variant='h5' gutterBottom>
+        {post.title}
+      </Typography>
       <CardContent>
         <Typography variant='h5' gutterBottom>
           {post.message}
@@ -58,7 +66,10 @@ const Post = ({ post, setCurrentId }) => {
           <ThumbUpAltIcon fontSize='small' style={{ marginRight: '5px' }} />{' '}
           Like {post.likeCount}
         </Button>
-        <Button size='small' color='primary' onClick={() => {}}>
+        <Button
+          size='small'
+          color='primary'
+          onClick={() => dispatch(deletePost(post._id))}>
           <DeleteIcon fontSize='small' style={{ marginRight: '5px' }} />
           Delete
         </Button>

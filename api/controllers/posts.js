@@ -38,14 +38,26 @@ export const createPost = async (req, res) => {
 }
 
 export const updatePost = async (req, res) => {
-    const { id } = req.params
-    const { title, message, creator, selectedFile, tags } = req.body
+  const { id } = req.params
+  const { title, message, creator, selectedFile, tags } = req.body
 
-    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('This ID does not match any posts')
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('This ID does not match any posts')
 
-    const updatedPost = { creator, title, message, tags, selectedFile, _id: id }
+  const updatedPost = { creator, title, message, tags, selectedFile, _id: id }
 
-    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true })
+  await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true })
 
-    res.json(updatedPost)
+  res.json(updatedPost)
+}
+
+export const deletePost = async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send('This ID does not match any posts')
+
+  await PostMessage.findByIdAndRemove(id)
+
+  res.json({ message: 'Post Deleted' })
 }
