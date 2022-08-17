@@ -1,27 +1,30 @@
 import React, { useState } from 'react'
 import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase from 'react-file-base64'
+import { useDispatch } from 'react-redux'
 
 import useStyles from './styles'
+import { createPost } from '../../actions/posts'
 
 const Form = () => {
-  const [postData, setPostData] = useState({
-    creator: '',
-    title: '',
-    message: '',
-    tags: '',
-    selectedFile: ''
-  })
+const [postData, setPostData] = useState({
+  creator: '',
+  title: '',
+  message: '',
+  tags: '',
+  selectedFile: ''
+})
+  const dispatch = useDispatch()
 
   const classes = useStyles()
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
+    dispatch(createPost(postData))
   }
 
-  const clear = () => {
-
-  }
+  const clear = () => {}
 
   return (
     <Paper className={classes.paper}>
@@ -30,7 +33,6 @@ const Form = () => {
         noValidate
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}>
-        <Typography variant='h6'>Creating a Memory</Typography>
         <TextField
           name='creator'
           variant='outlined'
@@ -54,6 +56,8 @@ const Form = () => {
           variant='outlined'
           label='Message'
           fullWidth
+          multiline
+          rows={4}
           value={postData.message}
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
@@ -62,10 +66,12 @@ const Form = () => {
         <TextField
           name='tags'
           variant='outlined'
-          label='Tags'
+          label='Tags (coma separated)'
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setPostData({ ...postData, tags: e.target.value.split(',') })
+          }
         />
         <div className={classes.fileInput}>
           <FileBase
@@ -76,8 +82,23 @@ const Form = () => {
             }
           />
         </div>
-        <Button className={classes.buttonSubmit} variant='container' color='primary' size='large' type='submit' fullWidth>Submit</Button>
-        <Button variant='contain' color='secondary' size='small' onClick={clear} fullWidth>Clear</Button>
+        <Button
+          className={classes.buttonSubmit}
+          variant='contained'
+          color='primary'
+          size='large'
+          type='submit'
+          fullWidth>
+          Submit
+        </Button>
+        <Button
+          variant='contained'
+          color='secondary'
+          size='small'
+          onClick={clear}
+          fullWidth>
+          Clear
+        </Button>
       </form>
     </Paper>
   )
