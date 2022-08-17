@@ -9,6 +9,7 @@ import thunk from 'redux-thunk'
 import { reducers } from './reducers'
 
 import App from './App'
+import './index.css'
 
 const container = document.getElementById('root')
 const root = createRoot(container)
@@ -17,5 +18,5 @@ const store = createStore(reducers, compose(applyMiddleware(thunk)))
 root.render(
   <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
 )
