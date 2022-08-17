@@ -28,7 +28,7 @@ const Post = ({ post, setCurrentId }) => {
         className={classes.media}
         image={post.selectedFile}
         title={post.title}
-        // Fixed error in console, but prevents image from showing. Looking for other solutions
+        // Fixes warning in console, but prevents image from showing. Looking for other solutions
         // component='img'
       />
       <div className={classes.overlay}>
