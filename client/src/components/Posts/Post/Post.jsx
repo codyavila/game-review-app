@@ -54,11 +54,11 @@ const Post = ({ post }) => {
       </CardContent>
       <CardActions className={classes.CardActions}>
         <Button size='small' color='primary' onClick={() => {}}>
-          <ThumbUpAltIcon fontSize='small' />
+          <ThumbUpAltIcon fontSize='small' style={{ marginRight: '5px' }} />{' '}
           Like {post.likeCount}
         </Button>
         <Button size='small' color='primary' onClick={() => {}}>
-          <DeleteIcon fontSize='small' />
+          <DeleteIcon fontSize='small' style={{ marginRight: '5px' }} />
           Delete
         </Button>
       </CardActions>
