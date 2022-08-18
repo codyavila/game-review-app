@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
 
-import { deletePost } from '../../../actions/posts'
+import { deletePost, likePost } from '../../../actions/posts'
 
 import useStyles from './styles'
 
@@ -62,8 +62,8 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.CardActions}>
-        <Button size='small' color='primary' onClick={() => {}}>
-          <ThumbUpAltIcon fontSize='small' style={{ marginRight: '5px' }} />{' '}
+        <Button size='small' color='primary' onClick={() => dispatch(likePost(post._id))}>
+          <ThumbUpAltIcon fontSize='small' style={{ marginRight: '5px' }} />
           Like {post.likeCount}
         </Button>
         <Button
